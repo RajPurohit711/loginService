@@ -1,12 +1,13 @@
 package com.example.loginService.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table
 public class Login {
-
+    @Id
     private String email;
     private String password;
 
