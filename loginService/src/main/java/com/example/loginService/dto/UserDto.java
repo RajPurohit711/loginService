@@ -1,25 +1,17 @@
 package com.example.loginService.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class UserDto {
-    private Long id;
     private String email;
     private String name;
     private String address;
     private String rating;
-    private Date userSince;
+    private LocalDate userSince;
     private Long phoneNo;
     private String Description;
     private String profileImage;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getEmail() {
         return email;
@@ -53,11 +45,11 @@ public class UserDto {
         this.rating = rating;
     }
 
-    public Date getUserSince() {
+    public LocalDate getUserSince() {
         return userSince;
     }
 
-    public void setUserSince(Date userSince) {
+    public void setUserSince(LocalDate userSince) {
         this.userSince = userSince;
     }
 

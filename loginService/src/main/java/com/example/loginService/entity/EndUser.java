@@ -1,24 +1,28 @@
 package com.example.loginService.entity;
+
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
 @Table
-public class User {
+public class EndUser {
+
     @Id
     @GeneratedValue(generator = "seq_gen_alias")
     @GenericGenerator(name="seq_gen_alias",strategy = "increment")
     private Long id;
+
+    @Column(unique =true,nullable = false)
     private String email;
+    @Column(nullable = false)
     private String name;
     private String address;
     private String rating;
-    private Date userSince;
+    private LocalDate userSince;
+    @Column(unique =true,nullable = false)
     private Long phoneNo;
     private String Description;
     private String profileImage;
@@ -63,11 +67,11 @@ public class User {
         this.rating = rating;
     }
 
-    public Date getUserSince() {
+    public LocalDate getUserSince() {
         return userSince;
     }
 
-    public void setUserSince(Date userSince) {
+    public void setUserSince(LocalDate userSince) {
         this.userSince = userSince;
     }
 
@@ -95,3 +99,4 @@ public class User {
         this.profileImage = profileImage;
     }
 }
+

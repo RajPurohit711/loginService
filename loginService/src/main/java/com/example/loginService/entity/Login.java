@@ -1,5 +1,6 @@
 package com.example.loginService.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,6 +10,7 @@ import javax.persistence.Table;
 public class Login {
     @Id
     private String email;
+    @Column(nullable = false)
     private String password;
 
     public String getEmail() {
