@@ -1,5 +1,6 @@
 package com.example.loginService.service.impl;
 
+import com.example.loginService.dto.LoginDto;
 import com.example.loginService.entity.EndUser;
 import com.example.loginService.repository.UserRepository;
 import com.example.loginService.service.UserService;
@@ -24,6 +25,18 @@ public class UserServiceImpl implements UserService {
 
     public void deleteUserById(Long id){
         userRepository.deleteById(id);
+    }
+
+    public void deleteUserByEmail(String  email){
+        userRepository.deleteByEmail(email);
+    }
+
+    public boolean exists(LoginDto loginDto){
+        EndUser endUser=userRepository.findByEmail(loginDto.getEmail());
+        if (endUser.getPassword().equals(loginDto.getPassword())){
+            return true;
+        }
+        return false;
     }
     }
 

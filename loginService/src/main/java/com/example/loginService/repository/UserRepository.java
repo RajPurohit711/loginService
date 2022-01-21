@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends CrudRepository<EndUser, Long> {
     EndUser findByEmail(String email);
-
+    void deleteByEmail(String email);
 
 }

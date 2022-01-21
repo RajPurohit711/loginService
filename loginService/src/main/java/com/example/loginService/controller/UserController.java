@@ -1,11 +1,11 @@
 package com.example.loginService.controller;
 
+import com.example.loginService.dto.LoginDto;
 import com.example.loginService.dto.RegisterDto;
 import com.example.loginService.dto.UserDto;
 import com.example.loginService.entity.EndUser;
-import com.example.loginService.entity.Login;
-import com.example.loginService.service.LoginService;
 import com.example.loginService.service.UserService;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +17,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @Autowired
-    LoginService loginService;
+
 
     @GetMapping(value="/{id}")
     UserDto getUserById(@PathVariable("id") Long id){
@@ -28,25 +27,33 @@ public class UserController {
         return userDto;
     }
 
+
+
     @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
-    void updateUserDetails(@RequestBody UserDto userDto){
-        EndUser enduser=new EndUser();
-        BeanUtils.copyProperties(userDto,enduser);
-        userService.save(enduser);
+    JSONObject updateUserDetails(@RequestBody UserDto userDto){
+        JSONObject jsonObject=new JSONObject();
+        EndUser endUser=userService.getUserByEmail(userDto.getEmail());
+        BeanUtils.copyProperties(userDto,endUser);
+        userService.save(endUser);
+        jsonObject.put("status",201);
+        return jsonObject;
     }
+
+
 
     @RequestMapping(value={"/register"},method = {RequestMethod.POST,RequestMethod.PUT})
-    void registerUser(@RequestBody RegisterDto registerDto){
+    JSONObject registerUser(@RequestBody RegisterDto registerDto){
+        JSONObject jsonObject=new JSONObject();
         EndUser endUser =new EndUser();
-        Login login=new Login();
         BeanUtils.copyProperties(registerDto,endUser);
-        BeanUtils.copyProperties(registerDto,login);
         System.out.println(java.time.LocalDate.now());
         endUser.setUserSince(java.time.LocalDate.now());
-
         userService.save(endUser);
-        loginService.save(login);
+        jsonObject.put("status",201);
+        return jsonObject;
     }
+
+
     @GetMapping(value="/email/{email}")
     UserDto getUserByEmail(@PathVariable("email") String email){
         EndUser endUser = userService.getUserByEmail(email);
@@ -55,12 +62,60 @@ public class UserController {
         return userDto;
     }
 
-    @DeleteMapping(value="/{id}")
-    void deleteUserById(@PathVariable("id") Long id){
-        EndUser endUser=userService.getUserById(id);
-        String email=endUser.getEmail();
-        userService.deleteUserById(id);
-        loginService.deleteLoginByEmail(email);
+
+
+    @DeleteMapping(value="delete/{email}")
+    JSONObject deleteUserByEmail(@RequestBody LoginDto loginDto){
+        JSONObject jsonObject=new JSONObject();
+        if(userService.exists(loginDto))
+        {
+            userService.deleteUserByEmail(loginDto.getEmail());
+            jsonObject.put("status",201);
+            return jsonObject;
+        }
+        jsonObject.put("status",500);
+        return jsonObject;
     }
 
+
+
+
+
 }
+
+
+//    @DeleteMapping(value="/{id}")
+//    void deleteUserById(@PathVariable("id") Long id){
+//        EndUser endUser=userService.getUserById(id);
+//        String email=endUser.getEmail();
+//        userService.deleteUserById(id);
+//    }
+
+//    @RequestMapping(value={"/login"},method = {RequestMethod.POST,RequestMethod.PUT})
+//    JSONObject authenticateUser(@RequestBody LoginDto loginDto){
+//        JSONObject jsonObject=new JSONObject();
+//        if(userService.exists(loginDto))
+//        {
+//            jsonObject.put("status",201);
+//            return jsonObject;
+//        }
+//        jsonObject.put("status",500);
+//        return jsonObject;
+//    }
+
+
+//    @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
+//    JSONObject updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
+//        JSONObject jsonObject=new JSONObject();
+//        EndUser endUser= userService.getUserByEmail(updatePasswordDto.getEmail());
+//        if (endUser.getPassword().equals(updatePasswordDto.getOldPassword())){
+//            if(updatePasswordDto.getNewPassword().equals(updatePasswordDto.getConfirmNewPassword())){
+//                endUser.setPassword(updatePasswordDto.getNewPassword());
+//                jsonObject.put("status",201);
+//                return jsonObject;
+//            }
+//        }
+//        jsonObject.put("status",500);
+//        return jsonObject;
+//
+//    }
