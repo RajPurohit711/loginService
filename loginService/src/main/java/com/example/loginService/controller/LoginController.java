@@ -2,11 +2,10 @@ package com.example.loginService.controller;
 
 import com.example.loginService.dto.LoginDto;
 import com.example.loginService.dto.UpdatePasswordDto;
-import com.example.loginService.dto.UserDto;
 import com.example.loginService.entity.EndUser;
 import com.example.loginService.service.UserService;
 import net.minidev.json.JSONObject;
-import org.springframework.beans.BeanUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

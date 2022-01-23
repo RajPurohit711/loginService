@@ -15,16 +15,21 @@ public class EndUser {
     @GenericGenerator(name="seq_gen_alias",strategy = "increment")
     private Long id;
 
-    @Column(unique =true,nullable = false)
+    @Column(unique =true,nullable = false,length = 100)
     private String email;
-    @Column(nullable = false)
+    @Column(nullable = false,length = 200)
     private String name;
+    @Column(length = 2048)
     private String address;
+    @Column(length=10)
     private String rating;
+    @Column(length=15)
     private LocalDate userSince;
-    @Column(unique =true,nullable = false)
+    @Column(unique =true,nullable = false,length=20)
     private Long phoneNo;
+    @Column(length=2048)
     private String Description;
+    @Column(length=2048)
     private String profileImage;
     @Column(nullable = false)
     private String password;
