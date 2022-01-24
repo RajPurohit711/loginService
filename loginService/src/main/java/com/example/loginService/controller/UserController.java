@@ -39,21 +39,6 @@ public class UserController {
         return jsonObject;
     }
 
-
-
-    @RequestMapping(value={"/register"},method = {RequestMethod.POST,RequestMethod.PUT})
-    JSONObject registerUser(@RequestBody RegisterDto registerDto){
-        JSONObject jsonObject=new JSONObject();
-        EndUser endUser =new EndUser();
-        BeanUtils.copyProperties(registerDto,endUser);
-        System.out.println(java.time.LocalDate.now());
-        endUser.setUserSince(java.time.LocalDate.now());
-        userService.save(endUser);
-        jsonObject.put("status",201);
-        return jsonObject;
-    }
-
-
     @GetMapping(value="/email/{email}")
     UserDto getUserByEmail(@PathVariable("email") String email){
         EndUser endUser = userService.getUserByEmail(email);
@@ -76,10 +61,6 @@ public class UserController {
         jsonObject.put("status",500);
         return jsonObject;
     }
-
-
-
-
 
 }
 

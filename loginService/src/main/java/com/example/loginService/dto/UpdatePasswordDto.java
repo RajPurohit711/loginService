@@ -1,33 +1,42 @@
 package com.example.loginService.dto;
 
 public class UpdatePasswordDto {
-    private String oldPassword;
-    private String newPassword;
-    private String confirmNewPassword;
+    private String enOtp;
+    private Long otp;
+    private String Password;
+    private String confirmPassword;
     private String email;
 
-    public String getOldPassword() {
-        return oldPassword;
+    public String getEnOtp() {
+        return enOtp;
     }
 
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
+    public void setEnOtp(String enOtp) {
+        this.enOtp = enOtp;
     }
 
-    public String getNewPassword() {
-        return newPassword;
+    public Long getOtp() {
+        return otp;
     }
 
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
+    public void setOtp(Long otp) {
+        this.otp = otp;
     }
 
-    public String getConfirmNewPassword() {
-        return confirmNewPassword;
+    public String getPassword() {
+        return Password;
     }
 
-    public void setConfirmNewPassword(String confirmNewPassword) {
-        this.confirmNewPassword = confirmNewPassword;
+    public void setPassword(String password) {
+        Password = password;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public String getEmail() {

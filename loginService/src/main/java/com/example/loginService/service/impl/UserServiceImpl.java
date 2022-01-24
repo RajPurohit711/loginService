@@ -4,6 +4,7 @@ import com.example.loginService.dto.LoginDto;
 import com.example.loginService.entity.EndUser;
 import com.example.loginService.repository.UserRepository;
 import com.example.loginService.service.UserService;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean exists(LoginDto loginDto){
         EndUser endUser=userRepository.findByEmail(loginDto.getEmail());
-        if (endUser.getPassword().equals(loginDto.getPassword())){
+        if (BCrypt.checkpw(String.valueOf(endUser.getPassword()),loginDto.getPassword())){
             return true;
         }
         return false;
