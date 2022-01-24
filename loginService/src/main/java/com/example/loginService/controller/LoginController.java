@@ -69,7 +69,7 @@ public class LoginController {
 
 
     @RequestMapping(value={"/login"},method = {RequestMethod.POST,RequestMethod.PUT})
-    JSONObject authenticateUser(@RequestBody LoginDto loginDto){
+    JSONObject authenticateUser(@RequestBody LoginDto loginDto) {
         JSONObject jsonObject=new JSONObject();
         if(userService.exists(loginDto))
         {
