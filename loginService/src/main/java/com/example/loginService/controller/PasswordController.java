@@ -67,19 +67,4 @@ public class PasswordController {
 }
 
 
-//
-//    @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
-//    JSONObject updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
-//        JSONObject jsonObject=new JSONObject();
-//        EndUser endUser= userService.getUserByEmail(updatePasswordDto.getEmail());
-//        if (endUser.getPassword().equals(updatePasswordDto.getOldPassword())){
-//            if(updatePasswordDto.getNewPassword().equals(updatePasswordDto.getConfirmNewPassword())){
-//                endUser.setPassword(updatePasswordDto.getNewPassword());
-//                jsonObject.put("status",201);
-//                return jsonObject;
-//            }
-//        }
-//        jsonObject.put("status",500);
-//        return jsonObject;
-//
-//    }
+

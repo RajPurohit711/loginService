@@ -2,6 +2,8 @@ package com.example.loginService.controller;
 
 import com.example.loginService.dto.*;
 import com.example.loginService.entity.EndUser;
+import com.example.loginService.entity.Token;
+import com.example.loginService.service.AuthService;
 import com.example.loginService.service.UserService;
 import net.minidev.json.JSONObject;
 
@@ -19,14 +21,31 @@ import java.util.Random;
 public class LoginController {
     @Autowired
     UserService userService;
+
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
     private DirectExchange exchange;
 
+    @Autowired
+    AuthService authService;
+
     OtpDto otpDto=new OtpDto();
 
+
+    @PostMapping(value = "/auth")
+    JSONObject auth(@RequestBody TokenDto tokenDto )
+    {
+        JSONObject jsonObject = new JSONObject();
+        Token token = authService.getToken(tokenDto.getEmail());
+        if(token != null) {
+            jsonObject.put("status", 200);
+        }
+        else
+            jsonObject.put("status",501);
+        return jsonObject;
+    }
 
     @RequestMapping(value={"/register"},method = {RequestMethod.POST,RequestMethod.PUT})
     JSONObject registerUser(@RequestBody ValidateOtpDto validateOtpDto){
@@ -59,6 +78,11 @@ public class LoginController {
             BeanUtils.copyProperties(validateOtpDto,endUser);
             endUser.setUserSince(java.time.LocalDate.now());
             userService.save(endUser);
+
+
+            Token token = authService.getToken(validateOtpDto.getEmail());
+
+            jsonObject.put("token",token);
             jsonObject.put("status",201);
             return jsonObject;
         }
@@ -84,21 +108,3 @@ public class LoginController {
 }
 
 
-//
-//    @GetMapping(value="/{email}")
-//    String getPasswordByEmail(@PathVariable("email") String  email){
-//        EndUser endUser=new EndUser();
-//        endUser=userService.getUserByEmail(email);
-//        String password=endUser.getPassword();
-//        return password;
-//    }
-
-
-
-//    @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
-//    void updatePassword(@RequestBody UserDto userDto){
-//
-//        EndUser endUser=userService.getUserByEmail(userDto.getEmail());
-//        BeanUtils.copyProperties(userDto,endUser);
-//        userService.save(endUser);
-//    }
