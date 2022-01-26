@@ -19,6 +19,7 @@ import java.util.Random;
 @RestController
 @RequestMapping(value="/login")
 public class LoginController {
+
     @Autowired
     UserService userService;
 
