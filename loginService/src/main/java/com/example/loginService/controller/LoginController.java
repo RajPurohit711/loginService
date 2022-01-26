@@ -40,11 +40,12 @@ public class LoginController {
     {
         JSONObject jsonObject = new JSONObject();
         Token token = authService.getToken(tokenDto.getEmail());
-        if(token != null) {
-            jsonObject.put("status", 200);
-        }
-        else
-            jsonObject.put("status",501);
+
+        System.out.println(token.getToken());
+
+        if(token.getToken().equals(tokenDto.getToken()))
+        jsonObject.put("status", 200);
+
         return jsonObject;
     }
 

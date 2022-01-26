@@ -16,9 +16,12 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public Token getToken(String email) {
         Token token = tokenRepository.findByEmail(email);
-        if (token == null) return token;
+        if (token != null) return token;
         token = new Token(email);
+        tokenRepository.save(token);
+
         return token;
+
     }
 
 

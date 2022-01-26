@@ -54,6 +54,7 @@ public class Token {
     public void setDate(Date date) {
         this.date = date;
     }
+    public Token(){}
 
     public Token(String email) {
         this.email = email;

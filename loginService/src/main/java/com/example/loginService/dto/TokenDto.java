@@ -7,7 +7,7 @@ import java.util.Date;
 public class TokenDto {
     String email;
     Date date;
-    Token token;
+    String token;
 
     public String getEmail() {
         return email;
@@ -25,11 +25,11 @@ public class TokenDto {
         this.date = date;
     }
 
-    public Token getToken() {
+    public String getToken() {
         return token;
     }
 
-    public void setToken(Token token) {
+    public void setToken(String token) {
         this.token = token;
     }
 }

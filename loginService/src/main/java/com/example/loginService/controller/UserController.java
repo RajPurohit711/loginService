@@ -27,8 +27,6 @@ public class UserController {
         return userDto;
     }
 
-
-
     @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
     JSONObject updateUserDetails(@RequestBody UserDto userDto){
         JSONObject jsonObject=new JSONObject();
@@ -49,7 +47,7 @@ public class UserController {
 
 
 
-    @DeleteMapping(value="delete/{email}")
+    @DeleteMapping(value="/delete")
     JSONObject deleteUserByEmail(@RequestBody LoginDto loginDto){
         JSONObject jsonObject=new JSONObject();
         if(userService.exists(loginDto))

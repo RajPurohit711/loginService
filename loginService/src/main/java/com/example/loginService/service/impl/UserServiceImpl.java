@@ -9,7 +9,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
@@ -36,7 +39,7 @@ public class UserServiceImpl implements UserService {
 
     public boolean exists(LoginDto loginDto){
         EndUser endUser=userRepository.findByEmail(loginDto.getEmail());
-        if (BCrypt.checkpw(String.valueOf(endUser.getPassword()),loginDto.getPassword())){
+        if (BCrypt.checkpw(loginDto.getPassword(),endUser.getPassword())){
             return true;
         }
         return false;
