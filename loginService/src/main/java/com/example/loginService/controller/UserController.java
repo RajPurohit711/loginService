@@ -63,38 +63,3 @@ public class UserController {
 }
 
 
-//    @DeleteMapping(value="/{id}")
-//    void deleteUserById(@PathVariable("id") Long id){
-//        EndUser endUser=userService.getUserById(id);
-//        String email=endUser.getEmail();
-//        userService.deleteUserById(id);
-//    }
-
-//    @RequestMapping(value={"/login"},method = {RequestMethod.POST,RequestMethod.PUT})
-//    JSONObject authenticateUser(@RequestBody LoginDto loginDto){
-//        JSONObject jsonObject=new JSONObject();
-//        if(userService.exists(loginDto))
-//        {
-//            jsonObject.put("status",201);
-//            return jsonObject;
-//        }
-//        jsonObject.put("status",500);
-//        return jsonObject;
-//    }
-
-
-//    @RequestMapping(value={"/update"},method = {RequestMethod.POST,RequestMethod.PUT})
-//    JSONObject updatePassword(@RequestBody UpdatePasswordDto updatePasswordDto){
-//        JSONObject jsonObject=new JSONObject();
-//        EndUser endUser= userService.getUserByEmail(updatePasswordDto.getEmail());
-//        if (endUser.getPassword().equals(updatePasswordDto.getOldPassword())){
-//            if(updatePasswordDto.getNewPassword().equals(updatePasswordDto.getConfirmNewPassword())){
-//                endUser.setPassword(updatePasswordDto.getNewPassword());
-//                jsonObject.put("status",201);
-//                return jsonObject;
-//            }
-//        }
-//        jsonObject.put("status",500);
-//        return jsonObject;
-//
-//    }

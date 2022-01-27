@@ -7,6 +7,7 @@ import com.example.loginService.service.AuthService;
 import com.example.loginService.service.UserService;
 import net.minidev.json.JSONObject;
 
+import org.apache.catalina.User;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -52,19 +53,14 @@ public class LoginController {
     @RequestMapping(value={"/register"},method = {RequestMethod.POST,RequestMethod.PUT})
     JSONObject registerUser(@RequestBody ValidateOtpDto validateOtpDto){
         JSONObject jsonObject=new JSONObject();
-        if (validateOtpDto.getPassword().equals(validateOtpDto.getConfirmPassword())){
-            Random rnd = new Random();
-            Long number = Long.valueOf(new Random().nextInt(900000) + 100000);
-            otpDto.setOtp(number);
-            String email=validateOtpDto.getEmail();
-            otpDto.setEmail(email);
-            rabbitTemplate.convertAndSend(exchange.getName(),"routing.LoginEmail",otpDto);
-            String enOtp=BCrypt.hashpw(number.toString(),BCrypt.gensalt());
-            jsonObject.put("status",201);
-            jsonObject.put("enOtp",enOtp);
-            return jsonObject;
-            }
-        jsonObject.put("status",500);
+        Random rnd = new Random();
+        Long number = Long.valueOf(new Random().nextInt(900000) + 100000);
+        otpDto.setOtp(number);
+        String email=validateOtpDto.getEmail();
+        otpDto.setEmail(email);
+        rabbitTemplate.convertAndSend(exchange.getName(),"routing.LoginEmail",otpDto);
+        String enOtp=BCrypt.hashpw(number.toString(),BCrypt.gensalt());
+        jsonObject.put("enOtp",enOtp);
         return jsonObject;
     }
 
@@ -100,10 +96,13 @@ public class LoginController {
         if(userService.exists(loginDto))
         {
             jsonObject.put("status",201);
+            EndUser user = userService.getUserByEmail(loginDto.getEmail());
+            jsonObject.put("id",user.getId());
             return jsonObject;
         }
         jsonObject.put("status",500);
         return jsonObject;
+
     }
 
 
