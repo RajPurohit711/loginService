@@ -50,6 +50,19 @@ public class LoginController {
         return jsonObject;
     }
 
+    @RequestMapping(value={"/register/{email}"},method = {RequestMethod.POST,RequestMethod.PUT})
+    JSONObject registerUserAndroid(@PathVariable("email") String email){
+        JSONObject jsonObject=new JSONObject();
+        Random rnd = new Random();
+        Long number = Long.valueOf(new Random().nextInt(900000) + 100000);
+        otpDto.setOtp(number);
+        otpDto.setEmail(email);
+        rabbitTemplate.convertAndSend(exchange.getName(),"routing.LoginEmail",otpDto);
+        String enOtp=BCrypt.hashpw(number.toString(),BCrypt.gensalt());
+        jsonObject.put("enOtp",enOtp);
+        return jsonObject;
+    }
+
     @RequestMapping(value={"/register"},method = {RequestMethod.POST,RequestMethod.PUT})
     JSONObject registerUser(@RequestBody ValidateOtpDto validateOtpDto){
         JSONObject jsonObject=new JSONObject();

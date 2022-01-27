@@ -24,7 +24,7 @@ public class EndUser {
     private String rating;
     @Column(length=15)
     private LocalDate userSince;
-    @Column(unique =true,nullable = false,length=20)
+    @Column(nullable = false,length=20)
     private Long phoneNo;
     @Column(length=2048)
     private String Description;
